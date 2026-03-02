@@ -1,4 +1,3 @@
-// src/api/user-api.ts
 import type { User } from "../types/user";
 import api from "./api";
 

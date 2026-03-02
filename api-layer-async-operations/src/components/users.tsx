@@ -1,38 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { fetchUsers } from "../api/user-api";
-import { withAsync } from "../helpers/with-async";
-import { API_STATUS } from "../constants/api-status";
-import { useApiStatus } from "../api/hooks/use-api-status";
-import type { User } from "../types/user";
+import { useApi } from "../api/hooks/use-api";
 import LazyLoader from "./lazy-loader";
+import type { User } from "../types/user";
 
 const useFetchUsers = () => {
-  const [users, setUsers] = useState<User[]>([]);
-  const { 
-    setStatus, 
-    isPending, 
-    isError, 
-    isSuccess 
-  } = useApiStatus(API_STATUS.IDLE);
+  const {
+    data: users,
+    exec: initFetchUsers,
+    isPending,
+    isSuccess,
+    // ...other statuses available if needed
+  } = useApi<User[]>(() => fetchUsers().then((res) => res.data));
 
-  const initFetchUsers = async () => {
-    setStatus(API_STATUS.PENDING);
-    const { response, error } = await withAsync(fetchUsers);
-
-    if (error) {
-      setStatus(API_STATUS.ERROR);
-    } else if (response) {
-      setUsers(response.data);
-      setStatus(API_STATUS.SUCCESS);
-    }
+  return {
+    users,
+    initFetchUsers,
+    isPending,
+    isSuccess,
   };
-
-  return { users, isPending, isError, isSuccess, initFetchUsers };
 };
 
 const Users: React.FC = () => {
-  const { users, isPending, isError, isSuccess, initFetchUsers } = useFetchUsers();
+  const { 
+    users, 
+    initFetchUsers,
+    isPending,
+    isSuccess,
+  } = useFetchUsers();
 
   useEffect(() => {
     initFetchUsers();
@@ -40,27 +36,24 @@ const Users: React.FC = () => {
 
   return (
     <Container>
-      <FetchButton onClick={initFetchUsers}>
-         {/* If request < 500ms, user only sees "Fetch Users" */}
-         <LazyLoader 
-          show={isPending} 
-          delay={500} 
-          defaultContent="Fetch Users" 
+      <FetchButton onClick={() => initFetchUsers()}>
+        <LazyLoader
+          show={isPending}
+          delay={500}
+          defaultContent="Fetch Users"
         />
       </FetchButton>
 
-      {isSuccess && (
+      {isSuccess && users && (
         <FlexContainer>
           {users.map((user) => (
             <ContentContainer key={user.id}>
-              <h3>{user.name}</h3>
-              <p>{user.email}</p>
+              <UserName>{user.name}</UserName>
+              <UserEmail>{user.email}</UserEmail>
             </ContentContainer>
           ))}
         </FlexContainer>
       )}
-
-      {isError && <ErrorMessage>Failed to load users.</ErrorMessage>}
     </Container>
   );
 };
@@ -101,11 +94,6 @@ const FetchButton = styled.button`
   border-radius: 4px;
   cursor: pointer;
   margin-bottom: 2rem;
-`;
-
-const ErrorMessage = styled.p`
-  color: red;
-  margin-top: 1rem;
 `;
 
 export default Users;

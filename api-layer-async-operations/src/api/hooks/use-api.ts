@@ -1,12 +1,25 @@
 import { useState } from "react";
 import { useApiStatus } from "./use-api-status";
 import { PENDING, SUCCESS, ERROR } from "../../constants/api-status";
+import type { ApiStatus } from "../../constants/api-status";
 
 interface ApiConfig<T> {
   initialData?: T;
 }
 
-export function useApi<T>(fn: (...args: any[]) => Promise<T>, config: ApiConfig<T> = {}) {
+/** Status flags derived from ApiStatus: isIdle, isPending, isSuccess, isError (updates when API_STATUS changes). */
+type StatusFlags = { [K in ApiStatus as `is${Capitalize<Lowercase<K>>}`]: boolean };
+
+export type UseApiReturn<T> = {
+  data: T | undefined;
+  setData: React.Dispatch<React.SetStateAction<T | undefined>>;
+  status: ReturnType<typeof useApiStatus>["status"];
+  setStatus: ReturnType<typeof useApiStatus>["setStatus"];
+  error: unknown;
+  exec: (...args: any[]) => Promise<{ data: T | null; error: unknown }>;
+} & StatusFlags;
+
+export function useApi<T>(fn: (...args: any[]) => Promise<T>, config: ApiConfig<T> = {}): UseApiReturn<T> {
   const [data, setData] = useState<T | undefined>(config.initialData);
   const [error, setError] = useState<unknown>();
   const { status, setStatus, ...normalisedStatuses } = useApiStatus();
