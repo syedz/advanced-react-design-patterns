@@ -3,6 +3,8 @@ import { ControlledModal } from "./components/controlled-modal";
 import { ControlledForm } from "./components/controlled-form";
 import { UncontrolledFlow } from "./components/uncontrolled-flow";
 import { ControlledFlow } from "./components/controlled-flow";
+import { UncontrolledModal } from "./components/uncontrolled-modal";
+import { UncontrolledForm } from "./components/uncontrolled-form";
 
 // Step components receive 'next' from the ControlledFlow wrapper
 const StepOne = ({ next }: { next?: (data: any) => void }) => (
@@ -45,11 +47,16 @@ function App() {
 
   return (
     <>
+      {/* <UncontrolledModal>
+        <h3>I am an Uncontrolled Modal!</h3>
+        <p>The child component decides when I appear.</p>
+      </UncontrolledModal> */}
+
       {/* <button onClick={() => setShouldShowModal(!shouldShowModal)}>
         {shouldShowModal ? "Hide Modal" : "Show Modal"}
-      </button>
+      </button> */} 
 
-      <ControlledModal 
+      {/* <ControlledModal 
         shouldShow={shouldShowModal} 
         onClose={() => setShouldShowModal(false)}
       >
@@ -57,18 +64,18 @@ function App() {
         <p>The parent component decides when I appear.</p>
       </ControlledModal> */}
 
-      {/* <UncontrolledForm />
-      <ControlledForm /> */}
+      {/* <UncontrolledForm /> */}
+      {/* <ControlledForm /> */}
 
       {/* Uncontrolled Flow */}
-      {/* <UncontrolledFlow onDone={(finalData) => {
+      <UncontrolledFlow onDone={(finalData) => {
         console.log("Flow Complete:", finalData);
         alert("Onboarding Finished!");
       }}>
         <StepOne />
         <StepTwo />
         <StepThree />
-      </UncontrolledFlow> */}
+      </UncontrolledFlow>
 
       <ControlledFlow currentIndex={currentIndex} onNext={handleNext}>
         <StepOne />

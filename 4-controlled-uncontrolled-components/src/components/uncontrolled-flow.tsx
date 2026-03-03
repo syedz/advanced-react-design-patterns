@@ -12,7 +12,7 @@ export const UncontrolledFlow: React.FC<UncontrolledFlowProps> = ({ children, on
   const childrenArray = React.Children.toArray(children);
   const currentChild = childrenArray[currentStepIndex];
 
-  const goNext = (dataFromStep: any) => {
+  const next = (dataFromStep: any) => {
     const nextStepIndex = currentStepIndex + 1;
     const updatedData = { ...data, ...dataFromStep };
 
@@ -28,7 +28,7 @@ export const UncontrolledFlow: React.FC<UncontrolledFlowProps> = ({ children, on
   };
 
   if (isValidElement(currentChild)) {
-    return cloneElement(currentChild as React.ReactElement<any>, { goNext });
+    return cloneElement(currentChild as React.ReactElement<any>, { next });
   }
 
   return <>{currentChild}</>;
