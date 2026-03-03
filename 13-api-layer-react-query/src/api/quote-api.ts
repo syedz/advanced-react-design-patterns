@@ -9,3 +9,6 @@ export const postQuote = (quote: Quote) =>
 
 export const resetQuotes = () => 
   api.post("reset", {}, {});
+
+export const fetchQuotesByPage = (page: number) =>
+  api.get<QuoteResponse>("", { params: { page } }).then((res) => res.data);

@@ -6,4 +6,5 @@ export interface Quote {
 
 export interface QuoteResponse {
   quotes: Quote[];
+  hasMore: boolean;
 }

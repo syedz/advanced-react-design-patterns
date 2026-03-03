@@ -1,8 +1,11 @@
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+
 import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import FetchTopQuotes from "./components/top-quotes";
 import { ToastContainer } from "react-toastify";
 import UpdateQuotes from "./components/update-quotes";
+import PaginatedQuotes from "./components/paginated-quotes";
 
 const queryClient = new QueryClient();
 
@@ -11,7 +14,9 @@ const App: React.FC = () => {
     <QueryClientProvider client={queryClient}>
       <UpdateQuotes />
       <ToastContainer />
-      <FetchTopQuotes />
+      {/* <FetchTopQuotes /> */}
+      <PaginatedQuotes />
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 };
