@@ -43,11 +43,12 @@ function App() {
   const handleNext = (dataFromStep: any) => {
     setData((prevData: any) => ({ ...prevData, ...dataFromStep }));
     setCurrentIndex((prevIndex: number) => prevIndex + 1);
+
+    console.log("dataFromStep", dataFromStep);
   };
 
   const handleDone = () => {
     console.log("Flow Complete:", data);
-    alert("Onboarding Finished!");
   };
 
   return (

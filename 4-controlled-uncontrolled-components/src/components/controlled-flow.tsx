@@ -1,4 +1,4 @@
-import React, { isValidElement, cloneElement } from "react";
+import React, { isValidElement, cloneElement, useEffect, useRef } from "react";
 
 interface ControlledFlowProps {
   children: React.ReactNode;
@@ -15,16 +15,24 @@ export const ControlledFlow: React.FC<ControlledFlowProps> = ({
 }) => {
   const childrenArray = React.Children.toArray(children);
   const currentChild = childrenArray[currentIndex];
+  const hasCalledDoneRef = useRef(false);
+
+  useEffect(() => {
+    if (currentIndex >= childrenArray.length) {
+      if (!hasCalledDoneRef.current) {
+        hasCalledDoneRef.current = true;
+        onDone();
+      }
+    } else {
+      hasCalledDoneRef.current = false;
+    }
+  }, [currentIndex, childrenArray.length, onDone]);
 
   if (isValidElement(currentChild)) {
     return cloneElement(currentChild as React.ReactElement<any>, {
       // Injects the parent's navigation handler into the child
       next: onNext,
     });
-  }
-  
-  if (currentIndex >= childrenArray.length) {
-    onDone();
   }
 
   return <>{currentChild}</>;
