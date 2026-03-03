@@ -1,5 +1,5 @@
 import api from "./api";
-import type { Quote, QuoteResponse } from "../types/quotes";
+import type { InfiniteQuoteResponse, Quote, QuoteResponse } from "../types/quotes";
 
 export const fetchTopQuotes = () =>
   api.get<QuoteResponse>("top_quotes", {}).then((res) => res.data.quotes);
@@ -12,3 +12,6 @@ export const resetQuotes = () =>
 
 export const fetchQuotesByPage = (page: number) =>
   api.get<QuoteResponse>("", { params: { page } }).then((res) => res.data);
+
+export const fetchQuotesByCursor = (cursor: number) =>
+  api.get<InfiniteQuoteResponse>("", { params: { cursor } }).then((res) => res.data);

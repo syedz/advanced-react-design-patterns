@@ -8,3 +8,7 @@ export interface QuoteResponse {
   quotes: Quote[];
   hasMore: boolean;
 }
+export interface InfiniteQuoteResponse {
+  quotes: Quote[];
+  nextCursor: number | null;
+}

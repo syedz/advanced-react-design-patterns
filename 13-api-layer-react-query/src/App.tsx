@@ -6,6 +6,7 @@ import FetchTopQuotes from "./components/top-quotes";
 import { ToastContainer } from "react-toastify";
 import UpdateQuotes from "./components/update-quotes";
 import PaginatedQuotes from "./components/paginated-quotes";
+import InfiniteScrollQuotes from "./components/infinite-scroll-quotes";
 
 const queryClient = new QueryClient();
 
@@ -15,7 +16,8 @@ const App: React.FC = () => {
       <UpdateQuotes />
       <ToastContainer />
       {/* <FetchTopQuotes /> */}
-      <PaginatedQuotes />
+      {/* <PaginatedQuotes /> */}
+      <InfiniteScrollQuotes />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
