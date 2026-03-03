@@ -13,7 +13,6 @@ const initialIngredients = [
 
 const Ingredients: React.FC = () => {
   console.log("Ingredients (Parent) rendered");
-  const [ingredient, setIngredient] = useState("");
   const [ingredients, setIngredients] = useState(initialIngredients);
 
   const addIngredient = (name: string) => {
@@ -44,8 +43,6 @@ const Ingredients: React.FC = () => {
       <StyledSpaceY4>
         <AddIngredient
           addIngredient={addIngredient}
-          ingredient={ingredient}
-          setIngredient={setIngredient}
         />
         <IngredientsList
           ingredients={ingredients}

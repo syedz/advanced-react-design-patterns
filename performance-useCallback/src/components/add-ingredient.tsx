@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 interface Props {
   addIngredient: (name: string) => void;
-  ingredient: string;
-  setIngredient: (name: string) => void;
 }
 
-const AddIngredient: React.FC<Props> = ({ addIngredient, ingredient, setIngredient }) => {
+const AddIngredient: React.FC<Props> = ({ addIngredient }) => {
   console.log("AddIngredient rendered");
+  // Moved this from Ingredients and updated the props to no longer accept it
+  const [ingredient, setIngredient] = useState("");
 
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
