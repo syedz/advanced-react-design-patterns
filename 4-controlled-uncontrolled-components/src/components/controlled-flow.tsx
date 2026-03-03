@@ -15,16 +15,10 @@ export const ControlledFlow: React.FC<ControlledFlowProps> = ({
 }) => {
   const childrenArray = React.Children.toArray(children);
   const currentChild = childrenArray[currentIndex];
-  const hasCalledDoneRef = useRef(false);
 
   useEffect(() => {
     if (currentIndex >= childrenArray.length) {
-      if (!hasCalledDoneRef.current) {
-        hasCalledDoneRef.current = true;
         onDone();
-      }
-    } else {
-      hasCalledDoneRef.current = false;
     }
   }, [currentIndex, childrenArray.length, onDone]);
 
