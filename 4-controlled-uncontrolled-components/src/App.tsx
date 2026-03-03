@@ -31,7 +31,7 @@ const StepThree = ({ next }: { next?: (data: any) => void }) => (
 const StepFour = ({ next }: { next?: (data: any) => void }) => (
   <>
     <h1>Step #4: Finalize</h1>
-    <button onClick={() => next?.({ country: "Canada" })}>Finish</button>
+    <button onClick={() => next?.({ city: "London" })}>Finish</button>
   </>
 );
 
@@ -41,8 +41,13 @@ function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleNext = (dataFromStep: any) => {
-    setData({ ...data, ...dataFromStep });
-    setCurrentIndex(currentIndex + 1);
+    setData((prevData: any) => ({ ...prevData, ...dataFromStep }));
+    setCurrentIndex((prevIndex: number) => prevIndex + 1);
+  };
+
+  const handleDone = () => {
+    console.log("Flow Complete:", data);
+    alert("Onboarding Finished!");
   };
 
   return (
@@ -68,16 +73,20 @@ function App() {
       {/* <ControlledForm /> */}
 
       {/* Uncontrolled Flow */}
-      <UncontrolledFlow onDone={(finalData) => {
+      {/* <UncontrolledFlow onDone={(finalData) => {
         console.log("Flow Complete:", finalData);
         alert("Onboarding Finished!");
       }}>
         <StepOne />
         <StepTwo />
         <StepThree />
-      </UncontrolledFlow>
+      </UncontrolledFlow> */}
 
-      <ControlledFlow currentIndex={currentIndex} onNext={handleNext}>
+      <ControlledFlow 
+        currentIndex={currentIndex} 
+        onNext={handleNext} 
+        onDone={handleDone}
+      >
         <StepOne />
         <StepTwo />
         {/* CONDITIONAL STEP: Only included in the flow if age > 25 */}
