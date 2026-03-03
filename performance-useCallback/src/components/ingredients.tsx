@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { nanoid } from "nanoid";
 import styled from "styled-components";
 import IngredientsList from "./ingredients-list";
@@ -25,10 +25,20 @@ const Ingredients: React.FC = () => {
     setIngredients((prev) => prev.filter((ing) => ing.id !== id));
   }, []);
 
+  // Memoizing the JSX element itself
+  const ingredientsHeaderText = useMemo(() => {
+    console.log("createIngredientsHeaderText (via useMemo) called");
+    return (
+      <StyledHeading2>
+        Ingredients ({ingredients.length})
+      </StyledHeading2>
+    );
+  }, [ingredients.length]);
+
   return (
     <StyledContainer>
       <div>
-        <StyledHeading2>Ingredients ({ingredients.length})</StyledHeading2>
+        {ingredientsHeaderText}
         <IngredientsInfoHelper />
       </div>
       <StyledSpaceY4>
