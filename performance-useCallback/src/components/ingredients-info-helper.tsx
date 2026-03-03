@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React from "react";
 import styled from "styled-components";
 
 const IngredientsInfoHelper: React.FC = () => {
@@ -7,6 +7,6 @@ const IngredientsInfoHelper: React.FC = () => {
 };
 
 // Memoized to prevent re-renders when parent state changes
-export default memo(IngredientsInfoHelper);
+export default IngredientsInfoHelper;
 
 const StyledButton = styled.button`width: 2rem; height: 2rem; border: 0; background: white; font-size: 20px; cursor: pointer;`;

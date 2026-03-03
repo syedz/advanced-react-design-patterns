@@ -11,7 +11,11 @@ const initialIngredients = [
   { id: nanoid(), name: "1 tbsp salt" },
 ];
 
-const Ingredients: React.FC = () => {
+interface Props {
+  helper: React.ReactNode;
+}
+
+const Ingredients: React.FC<Props> = ({ helper }) => {
   console.log("Ingredients (Parent) rendered");
   const [ingredients, setIngredients] = useState(initialIngredients);
 
@@ -38,7 +42,7 @@ const Ingredients: React.FC = () => {
     <StyledContainer>
       <div>
         {ingredientsHeaderText}
-        <IngredientsInfoHelper />
+        {helper}
       </div>
       <StyledSpaceY4>
         <AddIngredient
